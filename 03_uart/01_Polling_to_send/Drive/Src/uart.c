@@ -17,10 +17,6 @@ void Uart_Init(uint32_t baudrate){
     HAL_UART_Init(&uart1);
 }
 
-void Uart_SendChar(uint8_t c){
-    while (((USART1->ICR) & (1<<6))!=0);
-    USART1->TDR=c;
-}
 void HAL_UART_MspInit(UART_HandleTypeDef *huart){
     RCC_PeriphCLKInitTypeDef Uart_RCC_PeriphCLKInit;
     GPIO_InitTypeDef Uart_GPIO_Init;
@@ -39,4 +35,44 @@ void HAL_UART_MspInit(UART_HandleTypeDef *huart){
     Uart_GPIO_Init.Alternate=GPIO_AF7_USART1;
     HAL_GPIO_Init(GPIOA,&Uart_GPIO_Init);
 
+}
+void Uart_SendChar(uint8_t ch){
+    while(((uart1.Instance->ISR)&(1<<7))==RESET);
+    uart1.Instance->TDR=ch;
+}
+void Uart_SendString(uint8_t *str){
+    while(str!='\0'){
+        Uart_SendChar(*str);
+        str++;
+    }
+}
+void Uart_SendArray(uint8_t *arr,uint8_t length){
+    uint16_t i;
+    for (i = 0; i < length; i++)
+    {
+        Uart_SendChar(arr[i]);
+    }
+    
+}
+static uint64_t Pow(uint8_t x,uint64_t y){
+    uint64_t i=1;
+    while (y--)
+    {
+        i*= x;
+    }
+    return i;
+}
+void Uart_num(uint64_t num){
+    uint8_t i,length=1;
+    uint64_t temp =num;
+    while (temp/=10)
+    {
+        length++;
+    }
+    temp =num;
+    for (i = 0; i < length; i++)
+    {
+        Uart_SendChar(num/Pow(10,length-1-i) % 10 + '0');
+    }
+    Uart_SendChar('\n');
 }

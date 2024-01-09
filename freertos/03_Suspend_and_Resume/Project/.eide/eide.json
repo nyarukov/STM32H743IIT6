@@ -1,0 +1,280 @@
+{
+  "name": "Suspend_and_Resume",
+  "type": "ARM",
+  "dependenceList": [],
+  "srcDirs": [
+    ".eide/deps"
+  ],
+  "virtualFolder": {
+    "name": "<virtual_root>",
+    "files": [],
+    "folders": [
+      {
+        "name": "CMSIS",
+        "files": [
+          {
+            "path": "../CMSIS/Device/ST/STM32H7xx/Source/startup_stm32h743xx.s"
+          },
+          {
+            "path": "../CMSIS/Device/ST/STM32H7xx/Source/system_stm32h7xx.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "Core",
+        "files": [
+          {
+            "path": "../Core/Src/freertos_demo.c"
+          },
+          {
+            "path": "../Core/Src/main.c"
+          },
+          {
+            "path": "../Core/Src/stm32h7xx_hal_msp.c"
+          },
+          {
+            "path": "../Core/Src/stm32h7xx_it.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "Drive",
+        "files": [
+          {
+            "path": "../Drive/App/w25q128.c"
+          },
+          {
+            "path": "../Drive/Src/exti.c"
+          },
+          {
+            "path": "../Drive/Src/led.c"
+          },
+          {
+            "path": "../Drive/Src/rcc.c"
+          },
+          {
+            "path": "../Drive/Src/softspi.c"
+          },
+          {
+            "path": "../Drive/Src/uart.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "FreeRTSO",
+        "files": [
+          {
+            "path": "../FreeRTOS/CMSIS_RTOS_V2/cmsis_os2.c"
+          },
+          {
+            "path": "../FreeRTOS/croutine.c"
+          },
+          {
+            "path": "../FreeRTOS/event_groups.c"
+          },
+          {
+            "path": "../FreeRTOS/list.c"
+          },
+          {
+            "path": "../FreeRTOS/portable/MemMang/heap_4.c"
+          },
+          {
+            "path": "../FreeRTOS/portable/RVDS/ARM_CM4F/port.c"
+          },
+          {
+            "path": "../FreeRTOS/queue.c"
+          },
+          {
+            "path": "../FreeRTOS/stream_buffer.c"
+          },
+          {
+            "path": "../FreeRTOS/tasks.c"
+          },
+          {
+            "path": "../FreeRTOS/timers.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "STM32H7xx_HAL_Driver",
+        "files": [
+          {
+            "path": "../STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.c"
+          },
+          {
+            "path": "../STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.c"
+          },
+          {
+            "path": "../STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c"
+          },
+          {
+            "path": "../STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma.c"
+          },
+          {
+            "path": "../STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma_ex.c"
+          },
+          {
+            "path": "../STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.c"
+          },
+          {
+            "path": "../STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc_ex.c"
+          },
+          {
+            "path": "../STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_flash.c"
+          },
+          {
+            "path": "../STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_flash_ex.c"
+          },
+          {
+            "path": "../STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_hsem.c"
+          },
+          {
+            "path": "../STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_dma2d.c"
+          },
+          {
+            "path": "../STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_mdma.c"
+          },
+          {
+            "path": "../STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr.c"
+          },
+          {
+            "path": "../STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.c"
+          },
+          {
+            "path": "../STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_exti.c"
+          },
+          {
+            "path": "../STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c.c"
+          },
+          {
+            "path": "../STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_i2c_ex.c"
+          },
+          {
+            "path": "../STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim.c"
+          },
+          {
+            "path": "../STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_tim_ex.c"
+          },
+          {
+            "path": "../STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi.c"
+          },
+          {
+            "path": "../STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi_ex.c"
+          },
+          {
+            "path": "../STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart.c"
+          },
+          {
+            "path": "../STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_uart_ex.c"
+          }
+        ],
+        "folders": []
+      }
+    ]
+  },
+  "outDir": "build",
+  "deviceName": null,
+  "packDir": null,
+  "miscInfo": {
+    "uid": "f3a2622a417ad2d7e1594c6db588207c"
+  },
+  "targets": {
+    "freertos": {
+      "excludeList": [],
+      "toolchain": "AC5",
+      "compileConfig": {
+        "cpuType": "Cortex-M7",
+        "floatingPointHardware": "double",
+        "useCustomScatterFile": false,
+        "scatterFilePath": "<YOUR_SCATTER_FILE>.sct",
+        "storageLayout": {
+          "RAM": [
+            {
+              "tag": "IRAM",
+              "id": 1,
+              "mem": {
+                "startAddr": "0x20000000",
+                "size": "0x20000"
+              },
+              "isChecked": true,
+              "noInit": false
+            },
+            {
+              "tag": "IRAM",
+              "id": 2,
+              "mem": {
+                "startAddr": "0x24000000",
+                "size": "0x80000"
+              },
+              "isChecked": true,
+              "noInit": false
+            }
+          ],
+          "ROM": [
+            {
+              "tag": "IROM",
+              "id": 1,
+              "mem": {
+                "startAddr": "0x08000000",
+                "size": "0x200000"
+              },
+              "isChecked": true,
+              "isStartup": true
+            }
+          ]
+        },
+        "options": "null"
+      },
+      "uploader": "OpenOCD",
+      "uploadConfig": {
+        "bin": "",
+        "target": "stm32h7x",
+        "interface": "cmsis-dap",
+        "baseAddr": "0x08000000"
+      },
+      "uploadConfigMap": {
+        "JLink": {
+          "bin": "",
+          "baseAddr": "",
+          "cpuInfo": {
+            "vendor": "null",
+            "cpuName": "null"
+          },
+          "proType": 1,
+          "speed": 8000,
+          "otherCmds": ""
+        }
+      },
+      "custom_dep": {
+        "name": "default",
+        "incList": [
+          "../CMSIS/Include",
+          "../CMSIS/Device/ST/STM32H7xx/Include",
+          "../STM32H7xx_HAL_Driver/Inc",
+          "../STM32H7xx_HAL_Driver/Inc/Legacy",
+          "../FreeRTOS",
+          "../FreeRTOS/include",
+          "../FreeRTOS/CMSIS_RTOS_V2",
+          "../FreeRTOS/portable/RVDS/ARM_CM4F",
+          "../Drive/App",
+          "../Core/Inc",
+          "../Drive/Inc",
+          ".cmsis/include",
+          "RTE/_freertos",
+          ".eide/deps"
+        ],
+        "libList": [],
+        "sourceDirList": [],
+        "defineList": [
+          "USE_HAL_DRIVER",
+          "STM32H743xx"
+        ]
+      }
+    }
+  },
+  "version": "3.3"
+}

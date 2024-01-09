@@ -1,34 +1,41 @@
 #include "uart.h"
 
-UART_HandleTypeDef uart1;
-
-uint8_t rxstate;
-uint8_t rxdata[DATA_MAX],txdata[DATA_MAX];
+UCB uart1;
+uint8_t TxBuff[TX_SIZE],RxBuff[RX_SIZE];
 
 void Uart_Init(uint32_t baudrate){
-    uart1.Instance=USART1;
-    uart1.Init.BaudRate=baudrate;
-    uart1.Init.WordLength=UART_WORDLENGTH_8B;
-    uart1.Init.StopBits=UART_STOPBITS_1;
-    uart1.Init.Parity=UART_PARITY_NONE;
-    uart1.Init.Mode=UART_MODE_TX_RX;
-    uart1.Init.HwFlowCtl=UART_HWCONTROL_NONE;
-    uart1.Init.OverSampling=UART_OVERSAMPLING_16;
-    uart1.Init.OneBitSampling=UART_ONE_BIT_SAMPLE_DISABLE;
-    uart1.Init.ClockPrescaler=UART_PRESCALER_DIV1;
-    uart1.AdvancedInit.AdvFeatureInit=UART_ADVFEATURE_NO_INIT;
-    HAL_UART_Init(&uart1);
+    uart1.UARTx.Instance=USART1;
+    uart1.UARTx.Init.BaudRate=baudrate;
+    uart1.UARTx.Init.WordLength=UART_WORDLENGTH_8B;
+    uart1.UARTx.Init.StopBits=UART_STOPBITS_1;
+    uart1.UARTx.Init.Parity=UART_PARITY_NONE;
+    uart1.UARTx.Init.Mode=UART_MODE_TX_RX;
+    uart1.UARTx.Init.HwFlowCtl=UART_HWCONTROL_NONE;
+    uart1.UARTx.Init.OverSampling=UART_OVERSAMPLING_16;
+    uart1.UARTx.Init.OneBitSampling=UART_ONE_BIT_SAMPLE_DISABLE;
+    uart1.UARTx.Init.ClockPrescaler=UART_PRESCALER_DIV1;
+    uart1.UARTx.AdvancedInit.AdvFeatureInit=UART_ADVFEATURE_NO_INIT;
+    HAL_UART_Init(&uart1.UARTx);
 
-    HAL_UART_Receive_IT(&uart1,rxdata,SIZE);
-    __HAL_UART_ENABLE_IT(&uart1,UART_IT_RXNE);
-    // __HAL_UART_ENABLE_IT(&uart1,UART_IT_RTO);
-    // __HAL_UART_ENABLE_IT(&uart1,UART_IT_PE);
-    // __HAL_UART_ENABLE_IT(&uart1,UART_IT_ERR);
+    
+    __HAL_UART_ENABLE_IT(&uart1.UARTx,UART_IT_RXNE);
+    RingBuffer_Init();
 }
+void RingBuffer_Init(void){
+    uart1.TxCounter=0;
+    uart1.TxInPrt=&uart1.TxLocation[0];
+    uart1.TxOutPrt=&uart1.TxLocation[0];
+    uart1.TxEndPrt=&uart1.TxLocation[9];
+    uart1.TxInPrt->start=TxBuff;
 
-void Uart_SendChar(uint8_t c){
-    while (((USART1->ICR) & (1<<6))!=0);
-    USART1->TDR=c;
+    uart1.RxCounter=0;
+    uart1.RxInPrt=&uart1.RxLocation[0];
+    uart1.RxOutPrt=&uart1.RxLocation[0];
+    uart1.RxEndPrt=&uart1.RxLocation[9];
+    uart1.RxInPrt->start=RxBuff;
+
+    __HAL_UART_ENABLE_IT(&uart1.UARTx,UART_IT_IDLE);
+    HAL_UART_Receive_IT(&uart1.UARTx,&uart1.TxInPrt->star,RX_MAX+1);
 }
 void HAL_UART_MspInit(UART_HandleTypeDef *huart){
     RCC_PeriphCLKInitTypeDef Uart_RCC_PeriphCLKInit;
@@ -53,10 +60,18 @@ void HAL_UART_MspInit(UART_HandleTypeDef *huart){
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
     uint16_t i;
-    for (i = 0; i <SIZE; i++)
+    for (i = 0; i <RX_MAX; i++)
     {
-       txdata[i]=rxdata[i];
+       TxBuff[i]=RxBuff[i];
     }
-    rxstate=1;
-    HAL_UART_Receive_IT(&uart1,rxdata,SIZE);
+    HAL_UART_Receive_IT(&uart1.UARTx,RxBuff,RX_MAX);
+}
+void HAL_UART_AbortReceiveCpltCallback(UART_HandleTypeDef *huart){
+    uart1.RxInPrt->end = &RxBuff[uart1.UARTx.RxXferCount-1];
+    uart1.RxInPrt++;
+}
+
+void Uart_SendChar(uint8_t c){
+    while (((USART1->ICR) & (1<<6))!=0);
+    USART1->TDR=c;
 }

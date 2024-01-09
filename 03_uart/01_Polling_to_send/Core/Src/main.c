@@ -3,8 +3,8 @@
 void SystemClock_Config(void);
 static void MPU_Config(void);
 
-#define DATA_MAX    200
-uint8_t rxdata[256];
+#define DATA_MAX    10
+uint8_t rxdata[DATA_MAX];
 
 int main(void)
 {
@@ -14,23 +14,18 @@ int main(void)
   MX_GPIO_Init();
   Led_Init(led_r);
   Uart_Init(115200);
+  uint8_t i;
+  for (i = 0; i < DATA_MAX; i++)
+  {
+    rxdata[i]=i;
+  }
+  
+  Uart_SendArray(rxdata,DATA_MAX);
+  Uart_num(10151030);
   while (1)
   {
-    switch (HAL_UART_Receive(&uart1, rxdata, DATA_MAX, 2000))
-    {
-    case HAL_OK:
-      HAL_UART_Transmit(&uart1, rxdata, DATA_MAX, 2000);
-      break;
-    case HAL_TIMEOUT:
-      if (uart1.RxXferCount != DATA_MAX)
-      {
-        HAL_UART_Transmit(&uart1, rxdata, DATA_MAX- uart1.RxXferCount, 2000);
-      }
-      break;
-    case HAL_BUSY:
-      Led_Set(led_r, true);
-      break;
-    }
+    
+    // HAL_Delay(500);
   }
 }
 

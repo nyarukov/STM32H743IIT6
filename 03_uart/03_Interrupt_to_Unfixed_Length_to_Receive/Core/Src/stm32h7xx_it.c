@@ -191,7 +191,12 @@ void SysTick_Handler(void)
   /* USER CODE END SysTick_IRQn 1 */
 }
 void USART1_IRQHandler(void){
-  HAL_UART_IRQHandler(&uart1);
+  HAL_UART_IRQHandler(&uart1.UARTx);
+  if(__HAL_UART_GET_FLAG(&uart1.UARTx,UART_FLAG_IDLE)){
+    __HAL_UART_CLEAR_IDLEFLAG(&uart1.UARTx);
+    uart1.RxCounter+=(RX_MAX-uart1.UARTx.RxXferCount);
+    HAL_UART_AbortReceive_IT(&uart1.UARTx);
+  }
 }
 /******************************************************************************/
 /* STM32H7xx Peripheral Interrupt Handlers                                    */

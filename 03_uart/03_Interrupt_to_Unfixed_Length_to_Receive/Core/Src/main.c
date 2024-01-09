@@ -15,10 +15,7 @@ int main(void)
   uint8_t val=0;
   while (1)
   {
-    if(rxstate==1){
-      HAL_UART_Transmit_IT(&uart1,txdata,SIZE);
-      rxstate=0;
-    }
+
   }
 }
 
